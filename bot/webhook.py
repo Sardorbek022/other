@@ -1,4 +1,3 @@
-```python
 import asyncio
 
 from django.conf import settings
@@ -23,7 +22,6 @@ def telegram_webhook(request):
             status=405,
         )
 
-    # Telegram webhook secret
     secret = getattr(
         settings,
         "BOT_WEBHOOK_SECRET",
@@ -31,7 +29,6 @@ def telegram_webhook(request):
     )
 
     if secret:
-
         telegram_secret = request.headers.get(
             "X-Telegram-Bot-Api-Secret-Token"
         )
@@ -51,6 +48,7 @@ def telegram_webhook(request):
 
         update = Update.model_validate_json(
             update_data,
+            context={"bot": Bot},
         )
 
         async def process_update():
@@ -60,19 +58,14 @@ def telegram_webhook(request):
             )
 
             try:
-
                 await dp.feed_update(
                     bot,
                     update,
                 )
-
             finally:
-
                 await bot.session.close()
 
-        asyncio.run(
-            process_update()
-        )
+        asyncio.run(process_update())
 
         return JsonResponse(
             {
@@ -94,6 +87,5 @@ def telegram_webhook(request):
             },
             status=500,
         )
-```
 
      
