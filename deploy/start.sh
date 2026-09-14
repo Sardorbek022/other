@@ -4,6 +4,9 @@ set -euo pipefail
 echo "==> Running database migrations..."
 python manage.py migrate --noinput
 
+echo "==> Creating/updating admin..."
+python manage.py ensure_admin
+
 echo "==> Collecting static files..."
 python manage.py collectstatic --noinput
 
