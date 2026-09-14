@@ -31,6 +31,7 @@ if username and password:
         user.save()
         print('==> Admin created successfully.')
     else:
+        user.email = email or user.email
         user.is_staff = True
         user.is_superuser = True
         user.set_password(password)
