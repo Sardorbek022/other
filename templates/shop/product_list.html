@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>SardorStore — Onlayn Do'kon</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h1 class="brand-title">Sardor Store</h1>
+    <hr>
+
+    <h2>Mavjud mahsulotlar</h2>
+
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>
+        
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
+                    {% else %}
+                        <div class="no-image">Rasm yuklanmagan</div>
+                    {% endif %}
+
+                    <a href="{% url 'product_detail' product.slug %}">
+                        <strong>{{ product.name }}</strong>
+                    </a> 
+                    — {{ product.price }} so'm 
+                    <br>
+                    <small style="color: #666;">Kategoriya: {{ product.category.name }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Hozircha do'konda mahsulotlar yo'q.</p>
+    {% endif %}
+
+</body>
+</html>

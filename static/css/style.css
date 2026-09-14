@@ -1,0 +1,139 @@
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: #2b2b2b;
+    background-color: #f4f7f5;
+}
+
+.brand-title {
+    text-align: center; 
+    color: #0f5132; 
+    font-family: 'Georgia', 'Playfair Display', serif; 
+    font-size: 36px; 
+    font-weight: 900; 
+    letter-spacing: 1px; 
+    margin-top: 30px; 
+    margin-bottom: 20px;
+}
+
+h2, h3, label {
+    color: #0f5132;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 20px;
+    margin-top: 25px;
+}
+
+hr {
+    border: 0;
+    border-top: 2px solid #198754;
+    margin: 20px 0;
+}
+
+
+a {
+    color: #198754;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0f5132;
+    text-decoration: underline;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li, .info-box {
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #e1e7e4;
+    border-left: 5px solid #198754;
+    box-shadow: 0 4px 6px rgba(25, 135, 84, 0.05);
+}
+
+.product-img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    display: block;
+    border: 1px solid #e1e7e4;
+}
+
+.no-image {
+    width: 150px; 
+    height: 150px; 
+    background: #e1e7e4; 
+    border-radius: 6px; 
+    margin-bottom: 12px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 13px; 
+    color: #666;
+    border: 1px dashed #198754;
+}
+
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-size: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    border: 2px solid #ced4da;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: #198754;
+    outline: none;
+}
+
+
+button {
+    background-color: #198754;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
+}
+
+button:hover {
+    background-color: #0f5132;
+}
+
+.error-text {
+    color: #dc3545;
+    font-weight: 700;
+}

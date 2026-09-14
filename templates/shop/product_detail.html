@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <a href="{% url 'product_list' %}" class="back-link">← Bosh sahifaga qaytish</a>
+
+    <div class="info-box">
+        <h1>{{ product.name }}</h1>
+        <p><strong>Kategoriya:</strong> {{ product.category.name }}</p>
+        <p><strong>Narxi:</strong> {{ product.price }} so'm</p>
+        <p><strong>Omborda:</strong> {{ product.stock }} ta qoldi</p>
+        <p><strong>Tavsif:</strong><br>{{ product.description|default:"Tavsif yozilmagan." }}</p>
+    </div>
+
+    <div class="info-box">
+        <h3>Tezkor buyurtma berish</h3>
+        
+        {% if product.stock > 0 and product.is_available %}
+            <form action="{% url 'order_create' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                <label for="name">Ismingiz:</label>
+                <input type="text" id="name" name="customer_name" required>
+
+                <label for="phone">Telefon raqamingiz:</label>
+                <input type="text" id="phone" name="phone_number" placeholder="+998901234567" required>
+
+                <label for="qty">Soni:</label>
+                <input type="number" id="qty" name="quantity" value="1" min="1" max="{{ product.stock }}" required>
+
+                <button type="submit">Sotib olish</button>
+            </form>
+        {% else %}
+            <p class="error-text">Afsuski, ushbu mahsulot vaqtincha omborda tugagan.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
+
