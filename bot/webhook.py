@@ -5,13 +5,10 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from aiogram import Bot
 from aiogram.types import Update
 
-from .main import bot, dp
-
-
-# Aiogram uchun doimiy event loop
-_loop = asyncio.new_event_loop()
+from .main import dp, BOT_TOKEN
 
 
 @csrf_exempt
@@ -21,16 +18,16 @@ def telegram_webhook(request):
         return JsonResponse(
             {
                 "ok": False,
-                "error": "Only POST requests are allowed"
+                "error": "Only POST requests are allowed",
             },
-            status=405
+            status=405,
         )
 
-    # Telegram webhook secret tekshirish
+    # Telegram webhook secret
     secret = getattr(
         settings,
         "BOT_WEBHOOK_SECRET",
-        ""
+        "",
     )
 
     if secret:
@@ -40,54 +37,63 @@ def telegram_webhook(request):
         )
 
         if telegram_secret != secret:
-
             return JsonResponse(
                 {
                     "ok": False,
-                    "error": "Forbidden"
+                    "error": "Forbidden",
                 },
-                status=403
+                status=403,
             )
 
     try:
 
-        # Telegram JSON
         update_data = request.body.decode("utf-8")
 
-        # Aiogram Update obyektini yaratish
         update = Update.model_validate_json(
             update_data,
-            context={
-                "bot": bot
-            }
         )
 
-        # Aiogram handlerlarini ishga tushirish
-        _loop.run_until_complete(
-            dp.feed_update(
-                bot,
-                update
+        async def process_update():
+
+            bot = Bot(
+                token=BOT_TOKEN,
             )
+
+            try:
+
+                await dp.feed_update(
+                    bot,
+                    update,
+                )
+
+            finally:
+
+                await bot.session.close()
+
+        asyncio.run(
+            process_update()
         )
 
         return JsonResponse(
             {
-                "ok": True
+                "ok": True,
             }
         )
 
     except Exception as e:
 
         print(
-            f"Telegram webhook error: "
+            "Telegram webhook error: "
             f"{type(e).__name__}: {e}"
         )
 
         return JsonResponse(
             {
                 "ok": False,
-                "error": "Webhook processing failed"
+                "error": "Webhook processing failed",
             },
-            status=500
+            status=500,
         )
 ```
+
+     
